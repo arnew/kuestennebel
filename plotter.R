@@ -197,7 +197,7 @@ if(length(i <- grep("align$",args ))) {
 
 
 message("reading almanach")
-almanach <- fromJSON(file("~/kuestennebel/almanach.json"))
+almanach <- fromJSON(file("almanach.json"))
 almanach <- as.data.frame(unclass(almanach))
 
 message("reading plot data")
@@ -402,7 +402,7 @@ print(levels(alignagg$rid))
 agg <- as.data.frame(unclass(agg))
 
 message("reading image size for: ", outputname)
-sizes <- fromJSON(file("~/kuestennebel/imgsizes.json"))
+sizes <- fromJSON(file("imgsizes.json"))
 sizes <- as.data.frame(unclass(sizes))
 result <- sizes[sizes$name == outputname,]
 print(result)
@@ -433,7 +433,7 @@ p = p+theme(panel.border = element_blank())
 p = p+theme(strip.background = element_blank())
 
 message("reading annotations")
-sizes <- fromJSON(file("~/kuestennebel/annotations.json"))
+sizes <- fromJSON(file("annotations.json"))
 sizes <- as.data.frame(unclass(sizes))
 result <- sizes[sizes$name == outputname,]
 if(nrow(result)>0) {

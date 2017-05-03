@@ -29,6 +29,9 @@ tmp/%.i64: ${indir}/%.i64
 	@mkdir -p $(@D)
 	cp $< $@
 
+%:: %.xz
+	unxz --keep $<
+
 data/%.json: tmp/%.idb 
 	@mkdir -p $(@D)
 	${IDA} ${IDAOPT} -S"${PWD}/extract_json.py ${PWD}/$@" $<

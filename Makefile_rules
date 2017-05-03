@@ -21,15 +21,15 @@ img/%.png:
 
 %_flen.align:
 	@mkdir -p $(@D)
-	time ./multialign/main maxsim1 $^ $@
+	./multialign/main maxsim1 $^ $@
 
 %_truth.align:
 	@mkdir -p $(@D)
-	time ./multialign/main truth $^ $@
+	./multialign/main truth $^ $@
 
 %_nflen.align:
 	@mkdir -p $(@D)
-	time ./multialign/main maxsim1 $^ $@
+	./multialign/main maxsim1 $^ $@
 
 seq/%_flen.json: 
 	@mkdir -p $(@D)
@@ -45,35 +45,35 @@ seq/%_nflen.json:
 
 %_aflen.align:
 	@mkdir -p $(@D)
-	time ./multialign/main mindiff $^ $@
+	./multialign/main mindiff $^ $@
 
 %_anflen.align:
 	@mkdir -p $(@D)
-	time ./multialign/main mindiff $^ $@
+	./multialign/main mindiff $^ $@
 
 %_bflen.align:
 	@mkdir -p $(@D)
-	time ./multialign/main maxsim2 $^ $@
+	./multialign/main maxsim2 $^ $@
 
 %_bnflen.align:
 	@mkdir -p $(@D)
-	time ./multialign/main maxsim2 $^ $@
+	./multialign/main maxsim2 $^ $@
 
 %_cflen.align:
 	@mkdir -p $(@D)
-	time ./multialign/main maxsim3 $^ $@
+	./multialign/main maxsim3 $^ $@
 
 %_cnflen.align:
 	@mkdir -p $(@D)
-	time ./multialign/main maxsim3 $^ $@
+	./multialign/main maxsim3 $^ $@
 
 %_dflen.align:
 	@mkdir -p $(@D)
-	time ./multialign/main maxsim4 $^ $@
+	./multialign/main maxsim4 $^ $@
 
 %_dnflen.align:
 	@mkdir -p $(@D)
-	time ./multialign/main maxsim4 $^ $@
+	./multialign/main maxsim4 $^ $@
 
 seq/%_aflen.json: 
 	@mkdir -p $(@D)
