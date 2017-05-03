@@ -4,6 +4,10 @@ Using Docker
 
     git clone https://github.com/arnew/kuestennebel.git
     sudo apt-get install docker.io
+
+Build Docker Containers
+-----------------------
+
     docker build -t kuestennebel_base dockerbase
     docker build -t kuestennebel .
 
