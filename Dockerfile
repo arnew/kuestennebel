@@ -1,7 +1,9 @@
-FROM ubuntu:16.10
+FROM kuestennebel_base
 
 WORKDIR /kuestennebel
 ADD . /kuestennebel
+
+# HACK to keep the timestamps of the data subdirectory fresh, since rebuilding these requires ida
 RUN find /kuestennebel/data -exec touch {} \;
 
 RUN apt-get update
