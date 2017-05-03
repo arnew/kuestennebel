@@ -4,17 +4,16 @@ Using Docker
 
     git clone https://github.com/arnew/kuestennebel.git
     sudo apt-get install docker.io
-    docker build -t kuestennebel_base dockerbase
     docker build -t kuestennebel .
 
 
 Running With Docker
 -------------------
 
-    docker run -it kuestennebel make evaluation-putty
-    docker run -it kuestennebel make
-    docker run -it kuestennebel 
-    docker run -it kuestennebel bash
+    docker run -it -v=img:/kuestennebel/img kuestennebel make evaluation-putty
+    docker run -it -v=img:/kuestennebel/img kuestennebel make
+    docker run -it -v=img:/kuestennebel/img kuestennebel 
+    docker run -it -v=img:/kuestennebel/img kuestennebel bash
 	
 
 Dependencies

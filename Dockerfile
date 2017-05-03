@@ -1,4 +1,4 @@
-FROM kuestennebel_base
+FROM ubuntu:16.10
 
 WORKDIR /kuestennebel
 ADD . /kuestennebel
@@ -9,6 +9,7 @@ RUN apt-get -y install git python-numpy python-sklearn r-base r-cran-ggplot2 r-c
 RUN apt-get -y install r-cran-data.table rapidjson-dev
 
 RUN ( cd multialign; make )
+
 CMD make
 
 
