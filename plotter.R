@@ -437,21 +437,25 @@ sizes <- fromJSON(file("~/kuestennebel/annotations.json"))
 sizes <- as.data.frame(unclass(sizes))
 result <- sizes[sizes$name == outputname,]
 if(nrow(result)>0) {
-message("got annotations")
-print(result)
-message("processing annotations")
-for(i in 1:nrow(result)) {
-	geom = as.character(result[i,"geom"])
-	row = result[i,]
-	print(row)
-	print(!apply(is.na(row), 2, all))
-	current <- row[,!apply(is.na(row), 2, all)]
-	current$name = NULL
-	current$geom = NULL
-	args = current
-	print(args)
-	p = p + do.call(annotate,c(geom, args))
-}
+	message("got annotations")
+	#print(result)
+	message("processing annotations")
+	for(i in 1:nrow(result)) {
+		geom = as.character(result[i,"geom"])
+		row = result[i,]
+		#print(row)
+		#print(!apply(is.na(row), 2, all))
+		current <- row[,!apply(is.na(row), 2, all)]
+		current$name = NULL
+		current$geom = NULL
+		i <- sapply(current, is.factor)
+		current[i] <- lapply(current[i], as.character)
+		print(current)
+		args = unclass(current)
+		print(str(args))
+		p = p + do.call(annotate,c(geom, args))
+		#p = p + do.call(eval(parse(text=paste0("geom_",geom))), do.call(aes_q,args))
+	}
 }
 
 message("determining plot type: ", length(metricsname))
@@ -468,9 +472,10 @@ if (length(metricsname)) {
 		p = p + scale_y_reverse("Source Address", labels = hexlabels)
 		agg$b = agg$tgt
 		p = p + scale_x_continuous("Target Address", labels = hexlabels) 
+		p = p + theme(axis.text.x = element_text(angle=45, vjust=1, hjust=1))
 		if(nlevels(factor(agg$name)) < 10) {
 			p=p + geom_rect(data = agg, aes(ymin = fstart-1, ymax= fend-1, xmin=fstart-1, xmax = fend-1, fill = name))
-			p = p + scale_fill_hue(name="Function Name", na.value=NA)
+			p = p + scale_fill_brewer(name="Function Name", na.value=NA)
 		}
 	} else if(mode == "h") {
 
@@ -478,9 +483,10 @@ if (length(metricsname)) {
 		p = p + scale_y_reverse("Source Address", labels = hexlabels)
 		agg$b = agg$tgtidx
 		p = p + scale_x_continuous("Target Index") 
+		p = p + theme(axis.text.x = element_text(hjust=0.8))
 		if(nlevels(factor(agg$name)) < 10) {
 			p=p + geom_rect(data = agg, aes(ymin = fstart, ymax= fend, xmin=-Inf, xmax = Inf, fill = name))
-			p = p + scale_fill_hue(name="Function Name", na.value=NA)
+			p = p + scale_fill_brewer(name="Function Name", na.value=NA)
 		}
 	} else if(mode == "i") {
 
@@ -490,7 +496,7 @@ if (length(metricsname)) {
 		p = p + scale_x_continuous("Scaled Target") 
 	if(nlevels(factor(agg$name)) < 10) {
 	p=p + geom_rect(data = agg, aes(ymin = fstart, ymax= fend, xmin=-Inf, xmax = Inf, fill = name))
-	p = p + scale_fill_hue(name="Function Name", na.value=NA)
+	p = p + scale_fill_brewer(name="Function Name", na.value=NA)
 	}
 	} else if(mode == "d") {
 
@@ -498,9 +504,10 @@ if (length(metricsname)) {
 		p = p + scale_y_reverse("Source Function Index")
 		agg$b = agg$tgt
 		p = p + scale_x_continuous("Target Address", labels = hexlabels) 
+		p = p + theme(axis.text.x = element_text(angle=45, vjust=1, hjust=1))
 	if(nlevels(factor(agg$name)) < 10) {
 	p=p + geom_rect(data = agg, aes(ymin = seq-0.5, ymax= seq+1-0.5, xmin=fstart-1, xmax = fend-1, fill = name))
-	p = p + scale_fill_hue(name="Function Name", na.value=NA)
+	p = p + scale_fill_brewer(name="Function Name", na.value=NA)
 	}
 	} else if(mode == "e") {
 
@@ -508,10 +515,11 @@ if (length(metricsname)) {
 		p = p + scale_y_reverse("Source Function Index")
 		agg$b = agg$tgtidx
 		p = p + scale_x_continuous("Target Index") 
+		p = p + theme(axis.text.x = element_text(hjust=0.8))
 	if(nlevels(factor(agg$name)) < 10) {
 # XXX TODO
 	p=p + geom_rect(data = agg, aes(ymin = seq-0.5, ymax= seq+1-0.5, xmin=idxfstart-0.5, xmax = idxfend-0.5, fill = name))
-	p = p + scale_fill_hue(name="Function Name", na.value=NA)
+	p = p + scale_fill_brewer(name="Function Name", na.value=NA)
 	}
 	} else if(mode == "f") {
 
@@ -521,16 +529,17 @@ if (length(metricsname)) {
 		p = p + scale_x_continuous("Scaled Target") 
 	if(nlevels(factor(agg$name)) < 10) {
 	p=p + geom_rect(data = agg, aes(ymin = seq-0.5, ymax= seq+1-0.5, xmin=-Inf, xmax = Inf, fill = name))
-	p = p + scale_fill_hue(name="Function Name", na.value=NA)
+	p = p + scale_fill_brewer(name="Function Name", na.value=NA)
 	}
 	} else if(mode == "a") {
 		agg$a = agg$fstart
 		p = p + scale_y_reverse("Source Function Address", labels=hexlabels)
 		agg$b = agg$tgt
 		p = p + scale_x_continuous("Target Address", labels = hexlabels) 
+		p = p + theme(axis.text.x = element_text(angle=45, vjust=1, hjust=1))
 	if(nlevels(factor(agg$name)) < 10) {
 	p=p + geom_rect(data = agg, aes(ymin = fstart, ymax= fend, xmin=-Inf, xmax = Inf, fill = name))
-	p = p + scale_fill_hue(name="Function Name", na.value=NA)
+	p = p + scale_fill_brewer(name="Function Name", na.value=NA)
 	}
 	} else if(mode == "b") {
 
@@ -538,9 +547,10 @@ if (length(metricsname)) {
 		p = p + scale_y_reverse("Source Function Address", labels=hexlabels)
 		agg$b = agg$tgtidx
 		p = p + scale_x_continuous("Target Index") 
+		p = p + theme(axis.text.x = element_text(hjust=0.8))
 	if(nlevels(factor(agg$name)) < 10) {
 	p=p + geom_rect(data = agg, aes(ymin = fstart, ymax= fend, xmin=-Inf, xmax = Inf, fill = name))
-	p = p + scale_fill_hue(name="Function Name", na.value=NA)
+	p = p + scale_fill_brewer(name="Function Name", na.value=NA)
 	}
 	} else if(mode == "c") {
 
@@ -550,7 +560,7 @@ if (length(metricsname)) {
 		p = p + scale_x_continuous("Scaled Target") 
 	if(nlevels(factor(agg$name)) < 10) {
 	p=p + geom_rect(data = agg, aes(ymin = fstart, ymax= fend, xmin=-Inf, xmax = Inf, fill = name))
-	p = p + scale_fill_hue(name="Function Name", na.value=NA)
+	p = p + scale_fill_brewer(name="Function Name", na.value=NA)
 	}
 	} else {
 		message("automatically chosing axes")
@@ -568,6 +578,7 @@ if (length(metricsname)) {
 			message("normal, use normal target index")
 			agg$b = agg$tgtidx
 			p = p + scale_x_continuous("Target Index") 
+		p = p + theme(axis.text.x = element_text(hjust=0.8))
 		}
 
 		if(length(metricsname) < 3 && length(namesname) > 0 && nlevels(factor(agg$filename))<10 && nlevels(factor(agg$filename)) > 1) {
@@ -598,7 +609,7 @@ if (length(metricsname)) {
 			#} else {
 				p=p + geom_rect(data = agg, aes(ymin = a, ymax= a+1, xmin=-Inf, xmax = Inf, fill = filename)) 
 			#}
-			p = p + scale_fill_hue(name="Filename", na.value=NA)
+			p = p + scale_fill_brewer(name="Filename", na.value=NA)
 			#p = p+scale_fill_hue(na.value= NA)
 		}
 	}
@@ -615,7 +626,7 @@ pointsize = 0.01
 	} else {
 		if(mode == "inspect") {
 			p = p+ geom_point(data = agg, aes(y=a, x=b, colour = match), size=pointsize)
-			p = p + scale_colour_manual(values=c("FALSE"="red","TRUE"="green"), na.value="grey50")
+			p = p + scale_colour_manual(values=c("FALSE"="grey","TRUE"="black"), na.value="grey50")
 		} else if(mode == "mis") {
 			#p=p + geom_rect(data = agg, aes(ymin = a, ymax= a+1, xmin=-Inf, xmax = Inf, color= sim))
 
@@ -759,8 +770,10 @@ pointsize = 0.01
 		alignagg$data <- alignagg$precision
 	} else if (mode == "recall") {
 		alignagg$data <- alignagg$recall
+		label = "Stability"
 	} else if (mode == "similarity") {
 		alignagg$data <- alignagg$similar
+		label = "Similarity"
 	} else if (mode == "potential") {
 		alignagg$data <- alignagg$similar * alignagg$recall
 		label = "potential"
@@ -878,27 +891,28 @@ pointsize = 0.01
 			message("more than one suite")
 			rndid <- with(alignagg, ave(datay, linfo.suite, FUN=function(x) {sample.int(length(x))}))
 			alignsample = alignagg[rndid<=100,]
-			p = p+geom_point(data = alignsample, aes_q(y=~datay, x = ~datax, shape = ~mode, colour=~linfo.suite))
-			p = p + scale_colour_discrete(guide=guide_legend(title="Testsuite",nrow=2))
-			p = p + scale_shape_discrete(guide=guide_legend(title="Data Preparation"))
+			p = p+geom_point(data = alignsample, aes_q(y=~datay, x = ~datax, shape=~linfo.suite))
+			p = p + scale_colour_brewer(guide=guide_legend(title="Testsuite",nrow=2))
+			#p = p + scale_shape_discrete(guide=guide_legend(title="Data Preparation"))
 		} else if(length(differences) > 0 && length(differences) < 6 ){
 			formula = paste0("~",paste(differences, collapse=":"))
 			message("annotating differences: ", formula)
 			if(nlevels(factor(alignagg$mode)) == 1) {
 				message("single alignment mode")
-			p = p+geom_point(data = alignagg, aes_q(y=~datay, x = ~datax, colour= as.formula(formula)))
-			p = p + scale_colour_discrete(guide=guide_legend(title="Variation",ncol=2))
+			p = p+geom_point(data = alignagg, aes_q(y=~datay, x = ~datax, colour=as.formula(formula), shape = as.formula(formula)))
+			p = p + scale_shape_discrete(guide=guide_legend(title="Variation",ncol=2))
+			p = p + scale_colour_brewer(guide=guide_legend(title="Variation",ncol=2))
 			}
 			else {
 				message("multiple alignment modes")
-			p = p+geom_point(data = alignagg, aes_q(y=~datay, x = ~datax, colour = ~mode, shape= as.formula(formula)))
-			p = p + scale_shape_discrete(guide=guide_legend(title="Variation",ncol=2))
-			p = p + scale_colour_discrete(guide=guide_legend(title="Data Preparation"))
+			p = p+geom_point(data = alignagg, aes_q(y=~datay, x = ~datax, shape = ~mode, colour = as.formula(formula)))
+			p = p + scale_colour_brewer(guide=guide_legend(title="Variation",ncol=2))
+			p = p + scale_shape_discrete(guide=guide_legend(title="Data Preparation"))
 	}
 		} else {
 			message("plain correlation")
-			p = p+geom_point(data = alignagg, aes_q(y=~datay, x = ~datax, colour = ~mode)) #,colour = as.name(lfacets[1]), shape=as.name(rfacets[1])))
-			p = p + scale_colour_discrete(guide=guide_legend(title="Data Preparation"))
+			p = p+geom_point(data = alignagg, aes_q(y=~datay, x = ~datax, shape = ~mode)) #,colour = as.name(lfacets[1]), shape=as.name(rfacets[1])))
+			p = p + scale_shape_discrete(guide=guide_legend(title="Data Preparation"))
 		}
 		p = p+ theme( legend.position= "bottom")
 		p=p+labs(y=labely, x = labelx)
@@ -954,7 +968,8 @@ pointsize = 0.01
 		if(nlevels(factor(alignagg$mode)) == 1 && nlevels(alignagg$lfile) < 80) {
 			message("tileplot")
 			mode2="tileplot"
-			if(nlevels(alignagg$lfile) > 40) {
+			if(nlevels(alignagg$lfile) > 20) {
+				message("using small fonts")
 				#p = p+ theme( text=element_text(size=7,family="serif"))
 				p = p+ theme( axis.text=element_text(size=6,family="serif"))
 			}
@@ -1003,18 +1018,22 @@ print(nlevels(factor(signif(alignagg$data*100,digits=2))))
 				num_cuts = min(5, nlevels(factor(alignagg$data)))
 				message("cutting into: ", num_cuts)
 				if(num_cuts>1) {
-					#alignagg$data = tryCatch( {return(cut_number(signif(100*alignagg$data, digits=3),num_cuts))}, error=function(err) {
-				#return(cut(alignagg$data, breaks=c(0,0.2,0.4,0.6,0.8,1), labels=c("[0,20]%","(20,40]%","(40,60]%","(60,80]%","(80,100]%"), include.lowest = TRUE))} )
-					alignagg$data = cut_number(100*alignagg$data,num_cuts)
+					#alignagg$data = tryCatch( {return(cut_number(signif(100*alignagg$data),num_cuts))}, error=function(err) { return(cut(alignagg$data, breaks=c(0,0.2,0.4,0.6,0.8,1), labels=c("[0,20]%","(20,40]%","(40,60]%","(60,80]%","(80,100]%"), include.lowest = TRUE))} )
+					alignagg$data = cut(alignagg$data, breaks=c(0,0.2,0.4,0.6,0.8,1), labels=c("[0,20]%","(20,40]%","(40,60]%","(60,80]%","(80,100]%"), include.lowest = TRUE)
+					#alignagg$data = cut_number(100*alignagg$data,num_cuts)
 				}
 				if(mode == "recall") {
 message("plotting in greens")
-				p = p + scale_fill_brewer(name = label, palette = "Greens")
+				p = p + scale_fill_brewer(name = label, palette = "Greens", drop = F)
+				#p = p + scale_fill_grey(name = label, drop = F)
 } else if(mode == "similarity" || mode == "potential") {
-				p = p + scale_fill_brewer(name = label, palette = "Oranges")
+				p = p + scale_fill_brewer(name = label, palette = "Reds", drop = F)
+				#p = p + scale_fill_grey(name = label, drop = F)
 } else {
 message("plotting in blues (default)")
-				p = p + scale_fill_brewer(name=label)
+				p = p + scale_fill_brewer(name = label, palette = "Blues", drop = F)
+				#p = p + scale_fill_brewer(name=label, drop = F)
+				#p = p + scale_fill_grey(name = label, drop = F)
 }
 			message("tile plot")
 			p = p+ geom_tile(data = alignagg, aes(y = lid, x = rid, fill = data)) #, width = (1+similar)/2))

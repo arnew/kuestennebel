@@ -1,0 +1,42 @@
+IDAPATH?=/opt/ida-6.8/
+IDA?=${IDAPATH}idaq
+I64?=${IDAPATH}idaq64
+IDAOPT?=-A
+
+
+indir?=binwald
+vpath %.idb $(shell find ${indir} -type d)
+vpath %.i64 $(shell find ${indir} -type d)
+
+input=	$(shell find ${indir} -type f -name '*.idb')\
+	$(shell find ${indir} -type f -name '*.i64') 
+data=$(subst .i64,,$(subst .idb,,${input}))
+jsons=$(subst ${indir},data,$(addsuffix .json,${data}))
+names=$(subst ${indir},data,$(addsuffix .names,${data}))
+
+.PRECIOUS: %.json %.csv
+
+all_json: ${jsons}
+all_names: ${names}
+debug_all_json:
+	@echo ${jsons}
+
+tmp/%.idb: ${indir}/%.idb
+	@mkdir -p $(@D)
+	cp $< $@
+
+tmp/%.i64: ${indir}/%.i64
+	@mkdir -p $(@D)
+	cp $< $@
+
+data/%.json: tmp/%.idb 
+	@mkdir -p $(@D)
+	${IDA} ${IDAOPT} -S"${PWD}/extract_json.py ${PWD}/$@" $<
+
+data/%.json: tmp/%.i64 
+	@mkdir -p $(@D)
+	${I64} ${IDAOPT} -S"${PWD}/extract_json.py ${PWD}/$@" $<
+
+data/%.names: ${indir}/%
+	@mkdir -p $(@D)
+	objdump -Ct $< | awk 'BEGIN {file=""; print "[{"; OFS=","; ORS = "},\n{"; } /l    df/ {file = $$6; } / (\.data|\.rodata|\.bss)/ {file = ""}/F \.text/ {print "\"function\":\"" $$NF "\"","\"file\":\"" file "\"";} END{OFS="";ORS="";print "}]";}' - > $@

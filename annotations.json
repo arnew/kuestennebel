@@ -1,0 +1,50 @@
+[
+{"name": "img/cpu2006/bzip2_base.elf_ref_verb.png",                           "geom":"rect", "xmin":0, "xmax":50, "ymin":0, "ymax":21,                 "linetype":3,"colour":"grey50","fill":"yellow" },
+{"name": "img/cpu2006/bzip2_base.elf_ref_verb.png",                           "geom":"rect", "xmin":50, "xmax":200, "ymin":23, "ymax":44,              "linetype":3,"colour":"grey50","fill":"yellow" },
+{"name": "img/cpu2006/bzip2_base.elf_ref_verb.png",                           "geom":"rect", "xmin":200, "xmax":550, "ymin":43, "ymax":52,             "linetype":3,"colour":"grey50","fill":"yellow" },
+{"name": "img/cpu2006/bzip2_base.elf_ref_verb.png",                           "geom":"rect", "xmin":800, "xmax":1050, "ymin":66, "ymax":77,            "linetype":3,"colour":"grey50","fill":"yellow" },
+{"name": "img/cpu2006/bzip2_base.elf_ref_verb.png",                           "geom":"rect", "xmin":1300, "xmax":2075, "ymin":92, "ymax":100,          "linetype":3,"colour":"grey50","fill":"yellow" },
+{"name": "img/cpu2006/bzip2_base.elf_ref_verb.png",                           "geom":"rect", "xmin":2150, "xmax":2200, "ymin":100, "ymax":140,         "linetype":3,"colour":"grey50","fill":"yellow" },
+{"name": "img/cpu2006/bzip2_base.elf_ref_verb.png",                           "geom":"rect", "xmin":0, "xmax":30, "ymin":30, "ymax":100,               "linetype":3,"colour":"grey50","fill":"orange" },
+{"name": "img/cpu2006/bzip2_base.elf_ref_verb.png",                           "geom":"rect", "xmin":2170, "xmax":2220, "ymin":0, "ymax":25,            "linetype":3,"colour":"grey50","fill":"green"},
+
+{"name": "img/cpu2006/gcc_base.elf_ref_verb.png",                             "geom":"rect", "xmin":51000, "xmax":62500, "ymin":2100, "ymax":2200,     "linetype":3,"colour":"grey50","fill":"yellow" },
+{"name": "img/cpu2006/gcc_base.elf_ref_verb.png",                             "geom":"rect", "xmin":63500, "xmax":77000, "ymin":3100, "ymax":3200,     "linetype":3,"colour":"grey50","fill":"yellow" },
+{"name": "img/cpu2006/gcc_base.elf_ref_verb.png",                             "geom":"rect", "xmin":62500, "xmax":63500, "ymin":2200, "ymax":3150,     "linetype":3,"colour":"grey50","fill":"yellow" },
+{"name": "img/cpu2006/gcc_base.elf_ref_verb.png",                             "geom":"rect", "xmin":62900, "xmax":63100, "ymin":2400, "ymax":2900,     "linetype":3,"colour":"grey50","fill":"green" },
+{"name": "img/cpu2006/gcc_base.elf_ref_verb.png",                             "geom":"rect", "xmin":0, "xmax":120000, "ymin":4100, "ymax":4200,        "linetype":3,"colour":"grey50","fill":"orange" },
+
+{"name": "img/vmlinux/x86/x86_vmlinux-v4.0_ref_verb.png",                     "geom":"rect", "xmin":85000, "xmax":105000, "ymin":8700, "ymax":9800,    "linetype":3,"colour":"grey50","fill":"yellow"},
+{"name": "img/vmlinux/x86/x86_vmlinux-v4.0_ref_verb.png",                     "geom":"rect", "xmin":355000, "xmax":365000, "ymin":10000, "ymax":11100, "linetype":3,"colour":"grey50","fill":"green"},
+{"name": "img/vmlinux/x86/x86_vmlinux-v4.0_ref_verb.png",                     "geom":"rect", "xmin":305000, "xmax":318000, "ymin":22500, "ymax":24000, "linetype":3,"colour":"grey50","fill":"green"},
+{"name": "img/vmlinux/x86/x86_vmlinux-v4.0_ref_verb.png",                     "geom":"rect", "xmin":185000, "xmax":215000, "ymin":0, "ymax":39000,     "linetype":3,"colour":"grey50","fill":"lightblue"},
+
+{"name": "img/cpu2006/perlbench_base.elf_ref_verb.png",                       "geom":"rect", "xmin":9000, "xmax":25000, "ymin":440, "ymax":460,        "linetype":3,"colour":"grey50","fill":"orange" },
+{"name": "img/cpu2006/perlbench_base.elf_ref_verb.png",                       "geom":"rect", "xmin":3000, "xmax":11000, "ymin":750, "ymax":770,        "linetype":3,"colour":"grey50","fill":"orange" },
+{"name": "img/cpu2006/perlbench_base.elf_ref_verb.png",                       "geom":"rect", "ymin":100, "ymax":1875, "xmin":29000, "xmax":33500,      "linetype":3,"colour":"grey50","fill":"orange" },
+
+{"name": "img/cpu2006/povray_base.elf_ref_verb.png",                          "geom":"rect", "xmin":19750, "xmax":20250, "ymin":100, "ymax":1750,      "linetype":3,"colour":"grey50","fill":"orange"},
+{"name": "img/cpu2006/povray_base.elf_ref_verb.png",                          "geom":"rect", "xmin":0, "xmax":30500, "ymin":1100, "ymax":1300,         "linetype":3,"colour":"grey50","fill":"lightblue" },
+{"name": "img/cpu2006/povray_base.elf_ref_verb.png",                          "geom":"rect", "xmin":20000, "xmax":22500, "ymin":1100, "ymax":1300,     "linetype":3,"colour":"grey50","fill":"yellow" },
+
+{"name": "img/glibc/libc_glibc-2.22_gcc_3.so_ref_verb.png",                   "geom":"rect", "xmin":19000, "xmax":21000, "ymin":760, "ymax":810,       "linetype":3,"colour":"grey50","fill":"yellow"},
+{"name": "img/glibc/libc_glibc-2.22_gcc_3.so_ref_verb.png",                   "geom":"rect", "xmin":36500, "xmax":40000, "ymin":1200, "ymax":1280,     "linetype":3,"colour":"grey50","fill":"yellow"},
+{"name": "img/glibc/libc_glibc-2.22_gcc_3.so_ref_verb.png",                   "geom":"rect", "xmin":50000, "xmax":60000, "ymin":1250, "ymax":1350,     "linetype":3,"colour":"grey50","fill":"orange" },
+
+{"name": "img/bootloader/yaboot/yaboot.debug_1.3.17-6.fc19.elf_ref_verb.png", "geom":"rect", "xmin":3000, "xmax":7000, "ymin":0, "ymax":270,           "linetype":3,"colour":"grey50","fill":"lightblue" },
+{"name": "img/bootloader/yaboot/yaboot.debug_1.3.17-6.fc19.elf_ref_verb.png", "geom":"rect", "xmin":0, "xmax":3000, "ymin":270, "ymax":720,            "linetype":3,"colour":"grey50","fill":"lightblue" },
+{"name": "img/bootloader/yaboot/yaboot.debug_1.3.17-6.fc19.elf_ref_verb.png", "geom":"rect", "xmin":550, "xmax":650, "ymin":10, "ymax":270,            "linetype":3,"colour":"grey50","fill":"orange" },
+{"name": "img/bootloader/yaboot/yaboot.debug_1.3.17-6.fc19.elf_ref_verb.png", "geom":"rect", "xmin":2050, "xmax":2150, "ymin":0, "ymax":720,           "linetype":3,"colour":"grey50","fill":"orange" },
+{"name": "img/bootloader/yaboot/yaboot.debug_1.3.17-6.fc19.elf_ref_verb.png", "geom":"rect", "xmin":2390, "xmax":2510, "ymin":0, "ymax":720,           "linetype":3,"colour":"grey50","fill":"orange" },
+{"name": "img/bootloader/yaboot/yaboot.debug_1.3.17-6.fc19.elf_ref_verb.png", "geom":"rect", "xmin":7240, "xmax":7360, "ymin":0, "ymax":270,           "linetype":3,"colour":"grey50","fill":"orange" },
+{"name": "img/bootloader/yaboot/yaboot.debug_1.3.17-6.fc19.elf_ref_verb.png", "geom":"rect", "xmin":500, "xmax":2500, "ymin":0, "ymax":20,             "linetype":3,"colour":"grey50","fill":"orange" },
+{"name": "img/bootloader/yaboot/yaboot.debug_1.3.17-6.fc19.elf_ref_verb.png", "geom":"rect", "xmin":0, "xmax":500, "ymin":0, "ymax":20,                "linetype":3,"colour":"grey50","fill":"yellow" },
+{"name": "img/bootloader/yaboot/yaboot.debug_1.3.17-6.fc19.elf_ref_verb.png", "geom":"rect", "xmin":2000, "xmax":2100, "ymin":150, "ymax":210,         "linetype":3,"colour":"grey50","fill":"yellow" },
+{"name": "img/bootloader/yaboot/yaboot.debug_1.3.17-6.fc19.elf_ref_verb.png", "geom":"rect", "xmin":2500, "xmax":2750, "ymin":241, "ymax":253,         "linetype":3,"colour":"grey50","fill":"green"},
+{"name": "img/bootloader/yaboot/yaboot.debug_1.3.17-6.fc19.elf_ref_verb.png", "geom":"rect", "xmin":2750, "xmax":3000, "ymin":254, "ymax":268,         "linetype":3,"colour":"grey50","fill":"green"},
+
+{"name": "img/all_corD.png",                                                  "geom":"segment", "x":0,"y":0,"xend":0.5,"yend":1, "colour":"orange" },
+{"name": "img/all_corD.png",                                                  "geom":"segment", "x":0,"y":0,"xend":1,"yend":0.5, "colour":"orange" },
+
+{"name":"foobar", "width":1, "height":1}
+]
