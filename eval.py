@@ -96,8 +96,7 @@ testsuite = [
 {"name": "putty", "files":[
 "malputty/putty064.exe",
 "malputty/MalPutty.exe",
-"malputty/putty063.exe",
-"malputty/putty064.exe"
+"malputty/putty063.exe"
     ], "types":{
     "page":[("ref","verb")]
     ,"plot":[ ("ref","verb") ,("ref","a") ,("ref","b") ,("ref","c") ,("ref","d") ,("ref","e") ,("ref","f") ]
