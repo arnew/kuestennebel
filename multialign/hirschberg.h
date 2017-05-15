@@ -5,6 +5,8 @@
   http://portal.acm.org/citation.cfm?id=360861
   
   See also: http://wordaligned.org/articles/longest-common-subsquence
+
+  Modifyied to different comparison functions by Arne Wichmann, 2015-2017
 */
 #include <algorithm>
 #include <iterator>
@@ -41,13 +43,13 @@ void set_lcs(it x, members const & xs_in_lcs, ot lcs)
     }
 }
 
-	template<typename t_cmp, typename T> struct mselect {
-		t_cmp cmp;
-		mselect(t_cmp cmp) : cmp(cmp) {}
-		T operator()(T a, T b) {
-			return cmp(a,b)?a:b;
-		}
-	};
+template<typename t_cmp, typename T> struct mselect {
+	t_cmp cmp;
+	mselect(t_cmp cmp) : cmp(cmp) {}
+	T operator()(T a, T b) {
+		return cmp(a,b)?a:b;
+	}
+};
 
 /*
   Calculate LCS row lengths given iterator ranges into two sequences.

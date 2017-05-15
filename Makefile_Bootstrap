@@ -1,4 +1,4 @@
 
 Makefile_eval: eval.py
-	./eval.py > Makefile_eval 
+	./eval.py | awk '!x[$$0]++' > Makefile_eval 
 	wc -l Makefile_eval
