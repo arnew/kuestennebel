@@ -12,7 +12,6 @@ require(data.table)
 #library(gridExtra)
 library(reshape)
 library(scales)
-require(brotli)
 
 fc_names <- c(
 	      `F1` = "F1",
@@ -107,7 +106,8 @@ gettouches <- function( ent,names,fnum ) {
 	
 
 parsefile <- function(metricsfile, namesfile) {
-	metrics <- fromJSON(rawToChar(brotli_decompress(readBin(file(metricsfile,"rb"), raw(), file.info(metricsfile)$size))))
+	#metrics <- fromJSON(rawToChar(memDecompress(readBin(file(metricsfile,"rb"), raw(), file.info(metricsfile)$size))))
+	metrics <- fromJSON(file(metricsfile))
 	message("read json")
 
 	filenames = NULL
@@ -174,10 +174,10 @@ outputname = args[length(args)]
 args = args[1:(length(args) -1)]
 namesname = list()
 alignname = list()
-if(length(i <- grep("jsonb$",args ))) {
+if(length(i <- grep("json$",args ))) {
 	matches = args[i]
 	files = basename(matches)
-	names = sub("(.*)[.]jsonb","\\1",files)
+	names = sub("(.*)[.]json","\\1",files)
 	metricsname[names] = matches
 } 
 if(length(i <- grep("names$",args ))) {
@@ -186,10 +186,10 @@ if(length(i <- grep("names$",args ))) {
 	names = sub("(.*)[.]names","\\1",files)
 	namesname[names] = matches
 } 
-if(length(i <- grep("alignb$",args ))) {
+if(length(i <- grep("align.gz$",args ))) {
 	matches = args[i]
 	files = basename(matches)
-	names = sub("(.*)[.]alignb","\\1",files)
+	names = sub("(.*)[.]align.gz","\\1",files)
 	alignname[names] = matches
 }
 #print(metricsname)
@@ -220,7 +220,7 @@ if(length(alignname)) {
 	for(i in names(alignname)) {
 		message(alignname[[i]])
 		filename <- alignname[[i]]	
-		alignment<- fromJSON(rawToChar(brotli_decompress(readBin(file(filename,"rb"), raw(), file.info(filename)$size))))
+		alignment<- fromJSON(rawToChar(memDecompress(readBin(file(filename,"rb"), raw(), file.info(filename)$size))))
 		#alignment <- fromJSON(file(alignname[[i]]))
 		align = alignment$alignment
 

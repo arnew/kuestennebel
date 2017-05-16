@@ -12,13 +12,13 @@ input=	$(shell find ${indir} -type f -name '*.idb')\
 	$(shell find ${indir} -type f -name '*.i64') 
 data=$(subst .i64,,$(subst .idb,,${input}))
 jsons=$(subst ${indir},data,$(addsuffix .json,${data}))
-jsonbs=$(subst ${indir},data,$(addsuffix .jsonb,${data}))
+jsongzs=$(subst ${indir},data,$(addsuffix .json.gz,${data}))
 names=$(subst ${indir},data,$(addsuffix .names,${data}))
 
-.PRECIOUS: %.jsonb %.csv
+.PRECIOUS: %.json.gz %.csv
 
 all_json: ${jsons}
-all_jsonb: ${jsonbs}
+all_jsongz: ${jsongzs}
 all_names: ${names}
 debug_all_json:
 	@echo ${jsons}
@@ -34,11 +34,9 @@ tmp/%.i64: ${indir}/%.i64
 %:: %.xz
 	unxz --keep $<
 
-data/%.jsonb: data/%.json
-	brotli < $< > $@
-
-data/%.json: data/%.jsonb
-	brotli < $< > $@
+ifneq ("$(wildcard ${IDA})","")
+data/%.json.gz: data/%.json
+	gzip $<
 
 data/%.json: tmp/%.idb 
 	@mkdir -p $(@D)
@@ -47,7 +45,14 @@ data/%.json: tmp/%.idb
 data/%.json: tmp/%.i64 
 	@mkdir -p $(@D)
 	${I64} ${IDAOPT} -S"${PWD}/extract_json.py ${PWD}/$@" $<
+else
+data/%.json: data/%.json.gz
+	gunzip $<
+
+endif 
 
 data/%.names: ${indir}/%
 	@mkdir -p $(@D)
 	objdump -Ct $< | awk 'BEGIN {file=""; print "[{"; OFS=","; ORS = "},\n{"; } /l    df/ {file = $$6; } / (\.data|\.rodata|\.bss)/ {file = ""}/F \.text/ {print "\"function\":\"" $$NF "\"","\"file\":\"" file "\"";} END{OFS="";ORS="";print "}]";}' - > $@
+
+

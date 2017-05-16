@@ -19,12 +19,11 @@ img/%.png:
 	@mkdir -p $(@D)
 	./plotter.R $^ $@
 
-%.alignb: %.align
-	brotli < $< > $@
-	rm $<
+%.align.gz: %.align
+	gzip $<
 
-%.align: %.alignb
-	brotli --decompress < $< > $@
+%.align: %.align.gz
+	gunzip $<
 
 %_flen.align:
 	@mkdir -p $(@D)
