@@ -19,6 +19,13 @@ img/%.png:
 	@mkdir -p $(@D)
 	./plotter.R $^ $@
 
+%.alignb: %.align
+	brotli < $< > $@
+	rm $<
+
+%.align: %.alignb
+	brotli --decompress < $< > $@
+
 %_flen.align:
 	@mkdir -p $(@D)
 	./multialign/main maxsim1 $^ $@

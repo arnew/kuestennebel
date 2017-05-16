@@ -215,7 +215,7 @@ def foo_template(typ,name,prefix):
                 for al in align:
                     num += alignment_template(a,b,al,name)
                     path = os.path.dirname(a)
-                    alignment = "eval/{0}_{1}_{2}.align".format(a, os.path.basename(b),al)
+                    alignment = "eval/{0}_{1}_{2}.alignb".format(a, os.path.basename(b),al)
                     print("alignments: " + alignment)
                     target= "img/{1}_{2}_{3}_{4}.png".format(path, name, "-".join(align), perm[0],typ)
                     print(target + ": {0}".format(alignment))
@@ -232,7 +232,7 @@ for prefix, cases in [("evaluation", testsuite)]:
             for typ,mode in case["types"]["plot"]:
                 for i in case["files"]:
                     target = "img/{0}_{1}_{2}.png".format(i,typ,mode)
-                    print(target + ": data/{0}.json".format(i))
+                    print(target + ": data/{0}.jsonb".format(i))
                     if typ == "mod":
                         print(target + ": data/{0}.names".format(i))
                     evaluation_template(target, name,"plot",prefix)
@@ -242,9 +242,9 @@ for prefix, cases in [("evaluation", testsuite)]:
             for align,typ,perm,mode in case["types"]["pairs"]:
                 for (b,a) in get_gen(case["files"],perm):
                     alignments+= alignment_template(a,b,align,name)
-                    alignment = "eval/{0}_{1}_{2}.align".format(a, os.path.basename(b),align)
+                    alignment = "eval/{0}_{1}_{2}.alignb".format(a, os.path.basename(b),align)
                     target = "img/{0}_{1}_{2}_{3}_pairs_{4}.png".format(a, os.path.basename(b),align,typ,mode)
-                    print(target + ": {0} data/{1}.json data/{2}.json".format(alignment,a,b))
+                    print(target + ": {0} data/{1}.jsonb data/{2}.jsonb".format(alignment,a,b))
                     if typ == "mod":
                         print(target + ": data/{0}.names data/{1}.names".format(a,b))
                     evaluation_template(target, name,"pairs",prefix)
@@ -255,9 +255,9 @@ for prefix, cases in [("evaluation", testsuite)]:
                 for (b,a) in get_gen(case["files"],perm):
                     alignments+= alignment_template(a,b,align,name)
                     path = os.path.dirname(a)
-                    alignment = "eval/{0}_{1}_{2}.align".format(a, os.path.basename(b),align)
+                    alignment = "eval/{0}_{1}_{2}.alignb".format(a, os.path.basename(b),align)
                     target= "img/{1}_{2}_{3}_{4}_alignpage_{5}.png".format(path, name, align, typ, perm[0], mode)
-                    print(target + ": {0} data/{1}.json data/{2}.json".format(alignment,a,b))
+                    print(target + ": {0} data/{1}.jsonb data/{2}.jsonb".format(alignment,a,b))
                     if typ == "mod":
                         print(target + ": data/{0}.names data/{1}.names".format(a,b))
                     evaluation_template(target, name,"align_page",prefix)
@@ -267,7 +267,7 @@ for prefix, cases in [("evaluation", testsuite)]:
                 for a in case["files"]:
                     path = os.path.dirname(a)
                     target = "img/{1}_{2}_page_{3}.png".format(path,name,typ,mode)
-                    print(target + ": data/{0}.json".format(a))
+                    print(target + ": data/{0}.jsonb".format(a))
                     if typ == "mod":
                         print(target + ": data/{0}.names".format(a))
                     evaluation_template(target, name,"page",prefix)

@@ -12,6 +12,7 @@ require(data.table)
 #library(gridExtra)
 library(reshape)
 library(scales)
+require(brotli)
 
 fc_names <- c(
 	      `F1` = "F1",
@@ -106,7 +107,7 @@ gettouches <- function( ent,names,fnum ) {
 	
 
 parsefile <- function(metricsfile, namesfile) {
-	metrics <- fromJSON(file(metricsfile))
+	metrics <- fromJSON(rawToChar(brotli_decompress(readBin(file(metricsfile,"rb"), raw(), file.info(metricsfile)$size))))
 	message("read json")
 
 	filenames = NULL
@@ -173,10 +174,10 @@ outputname = args[length(args)]
 args = args[1:(length(args) -1)]
 namesname = list()
 alignname = list()
-if(length(i <- grep("json$",args ))) {
+if(length(i <- grep("jsonb$",args ))) {
 	matches = args[i]
 	files = basename(matches)
-	names = sub("(.*)[.]json","\\1",files)
+	names = sub("(.*)[.]jsonb","\\1",files)
 	metricsname[names] = matches
 } 
 if(length(i <- grep("names$",args ))) {
@@ -185,10 +186,10 @@ if(length(i <- grep("names$",args ))) {
 	names = sub("(.*)[.]names","\\1",files)
 	namesname[names] = matches
 } 
-if(length(i <- grep("align$",args ))) {
+if(length(i <- grep("alignb$",args ))) {
 	matches = args[i]
 	files = basename(matches)
-	names = sub("(.*)[.]align","\\1",files)
+	names = sub("(.*)[.]alignb","\\1",files)
 	alignname[names] = matches
 }
 #print(metricsname)
@@ -218,11 +219,13 @@ agg <- data.frame()
 if(length(alignname)) {
 	for(i in names(alignname)) {
 		message(alignname[[i]])
-		alignment <- fromJSON(file(alignname[[i]]))
+		filename <- alignname[[i]]	
+		alignment<- fromJSON(rawToChar(brotli_decompress(readBin(file(filename,"rb"), raw(), file.info(filename)$size))))
+		#alignment <- fromJSON(file(alignname[[i]]))
 		align = alignment$alignment
 
-		lfile = sub("(.*)_[a-z]*.json","\\1",alignment$fileA[1])
-		rfile = sub("(.*)_[a-z]*.json","\\1",alignment$fileB[1])
+		lfile = sub("(.*)_[a-z]*.jsonb","\\1",alignment$fileA[1])
+		rfile = sub("(.*)_[a-z]*.jsonb","\\1",alignment$fileB[1])
 
 
 lf = sub("seq/(.*)","\\1",lfile)
@@ -269,8 +272,8 @@ rf = sub("seq/(.*)","\\1",rfile)
 		lfile = basename(lfile)
 		rfile = basename(rfile)
 
-		lmode = sub(".*_([a-z]*)[.]json","\\1",basename(alignment$fileA[1]))
-		rmode = sub(".*_([a-z]*)[.]json","\\1",basename(alignment$fileB[1]))
+		lmode = sub(".*_([a-z]*)[.]jsonb","\\1",basename(alignment$fileA[1]))
+		rmode = sub(".*_([a-z]*)[.]jsonb","\\1",basename(alignment$fileB[1]))
 		mode = lmode
 		if(lmode != rmode) {
 			warning ("different modes in alignment")

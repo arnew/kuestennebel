@@ -12,11 +12,13 @@ input=	$(shell find ${indir} -type f -name '*.idb')\
 	$(shell find ${indir} -type f -name '*.i64') 
 data=$(subst .i64,,$(subst .idb,,${input}))
 jsons=$(subst ${indir},data,$(addsuffix .json,${data}))
+jsonbs=$(subst ${indir},data,$(addsuffix .jsonb,${data}))
 names=$(subst ${indir},data,$(addsuffix .names,${data}))
 
-.PRECIOUS: %.json %.csv
+.PRECIOUS: %.jsonb %.csv
 
 all_json: ${jsons}
+all_jsonb: ${jsonbs}
 all_names: ${names}
 debug_all_json:
 	@echo ${jsons}
@@ -31,6 +33,12 @@ tmp/%.i64: ${indir}/%.i64
 
 %:: %.xz
 	unxz --keep $<
+
+data/%.jsonb: data/%.json
+	brotli < $< > $@
+
+data/%.json: data/%.jsonb
+	brotli < $< > $@
 
 data/%.json: tmp/%.idb 
 	@mkdir -p $(@D)
