@@ -27,6 +27,7 @@ Dependencies
 Tested on ubuntu 16.10 :
 (requires packages from universe)
 
-    sudo apt install git python-numpy python-sklearn r-base r-cran-ggplot2 r-cran-jsonlite r-cran-reshape r-cran-data.table
+    sudo apt install git python-numpy python-sklearn r-base r-cran-ggplot2 r-cran-jsonlite r-cran-reshape r-cran-data.table brotli
+    echo 'install.packages("brotli",repos="https://cloud.r-project.org")' | R --vanilla
 
 
