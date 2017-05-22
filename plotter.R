@@ -12,6 +12,7 @@ require(data.table)
 #library(gridExtra)
 library(reshape)
 library(scales)
+require(brotli)
 
 fc_names <- c(
 	      `F1` = "F1",
@@ -186,10 +187,10 @@ if(length(i <- grep("names$",args ))) {
 	names = sub("(.*)[.]names","\\1",files)
 	namesname[names] = matches
 } 
-if(length(i <- grep("align.gz$",args ))) {
+if(length(i <- grep("align.brotli$",args ))) {
 	matches = args[i]
 	files = basename(matches)
-	names = sub("(.*)[.]align.gz","\\1",files)
+	names = sub("(.*)[.]align.brotli","\\1",files)
 	alignname[names] = matches
 }
 #print(metricsname)
@@ -220,12 +221,12 @@ if(length(alignname)) {
 	for(i in names(alignname)) {
 		message(alignname[[i]])
 		filename <- alignname[[i]]	
-		alignment<- fromJSON(rawToChar(memDecompress(readBin(file(filename,"rb"), raw(), file.info(filename)$size))))
+		alignment<- fromJSON(rawToChar(brotli_decompress(readBin(file(filename,"rb"), raw(), file.info(filename)$size))))
 		#alignment <- fromJSON(file(alignname[[i]]))
 		align = alignment$alignment
 
-		lfile = sub("(.*)_[a-z]*.jsonb","\\1",alignment$fileA[1])
-		rfile = sub("(.*)_[a-z]*.jsonb","\\1",alignment$fileB[1])
+		lfile = sub("(.*)_[a-z]*.json","\\1",alignment$fileA[1])
+		rfile = sub("(.*)_[a-z]*.json","\\1",alignment$fileB[1])
 
 
 lf = sub("seq/(.*)","\\1",lfile)
@@ -272,8 +273,8 @@ rf = sub("seq/(.*)","\\1",rfile)
 		lfile = basename(lfile)
 		rfile = basename(rfile)
 
-		lmode = sub(".*_([a-z]*)[.]jsonb","\\1",basename(alignment$fileA[1]))
-		rmode = sub(".*_([a-z]*)[.]jsonb","\\1",basename(alignment$fileB[1]))
+		lmode = sub(".*_([a-z]*)[.]json","\\1",basename(alignment$fileA[1]))
+		rmode = sub(".*_([a-z]*)[.]json","\\1",basename(alignment$fileB[1]))
 		mode = lmode
 		if(lmode != rmode) {
 			warning ("different modes in alignment")

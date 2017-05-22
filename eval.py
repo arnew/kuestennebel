@@ -190,6 +190,7 @@ def get_gen(files,perm):
         rs = random.sample(range(0,len(data)),sample)
         return [data[i] for i in sorted(rs)]
     
+compression=".brotli"
 
 def alignment_template(a,b,t,n): 
     target = "eval/{0}_{1}_{2}.align".format(a, os.path.basename(b),t)
@@ -215,7 +216,7 @@ def foo_template(typ,name,prefix):
                 for al in align:
                     num += alignment_template(a,b,al,name)
                     path = os.path.dirname(a)
-                    alignment = "eval/{0}_{1}_{2}.align{3}".format(a, os.path.basename(b),al,"")
+                    alignment = "eval/{0}_{1}_{2}.align{3}".format(a, os.path.basename(b),al,compression)
                     print("alignments: " + alignment)
                     target= "img/{1}_{2}_{3}_{4}.png".format(path, name, "-".join(align), perm[0],typ)
                     print(target + ": {0}".format(alignment))
@@ -242,7 +243,7 @@ for prefix, cases in [("evaluation", testsuite)]:
             for align,typ,perm,mode in case["types"]["pairs"]:
                 for (b,a) in get_gen(case["files"],perm):
                     alignments+= alignment_template(a,b,align,name)
-                    alignment = "eval/{0}_{1}_{2}.align{3}".format(a, os.path.basename(b),align,".gz")
+                    alignment = "eval/{0}_{1}_{2}.align{3}".format(a, os.path.basename(b),align,compression)
                     target = "img/{0}_{1}_{2}_{3}_pairs_{4}.png".format(a, os.path.basename(b),align,typ,mode)
                     print(target + ": {0} data/{1}.json{3} data/{2}.json{3}".format(alignment,a,b,""))
                     if typ == "mod":
@@ -255,7 +256,7 @@ for prefix, cases in [("evaluation", testsuite)]:
                 for (b,a) in get_gen(case["files"],perm):
                     alignments+= alignment_template(a,b,align,name)
                     path = os.path.dirname(a)
-                    alignment = "eval/{0}_{1}_{2}.align{3}".format(a, os.path.basename(b),align,".gz")
+                    alignment = "eval/{0}_{1}_{2}.align{3}".format(a, os.path.basename(b),align,compression)
                     target= "img/{1}_{2}_{3}_{4}_alignpage_{5}.png".format(path, name, align, typ, perm[0], mode)
                     print(target + ": {0} data/{1}.json{3} data/{2}.json{3}".format(alignment,a,b,""))
                     if typ == "mod":

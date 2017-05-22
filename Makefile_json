@@ -36,7 +36,7 @@ tmp/%.i64: ${indir}/%.i64
 
 ifneq ("$(wildcard ${IDA})","")
 data/%.json.gz: data/%.json
-	gzip $<
+	gzip -f $<
 
 data/%.json: tmp/%.idb 
 	@mkdir -p $(@D)
@@ -48,7 +48,6 @@ data/%.json: tmp/%.i64
 else
 data/%.json: data/%.json.gz
 	gunzip $<
-
 endif 
 
 data/%.names: ${indir}/%
